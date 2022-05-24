@@ -1,7 +1,7 @@
 # Simple WebApp to show IllegalAccessException with JDK 17
 
-This is a minimalistic web application to illustrate a problem with Java 17.
-It uses the following stack:
+This is a minimalistic web application to illustrate a problem with Java 17 [I asked for help](https://stackoverflow.com/questions/72361100/) on stackoverflow.
+It uses the following application stack:
 
 * JDK 17
 * JakartaEE8
