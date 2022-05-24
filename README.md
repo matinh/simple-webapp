@@ -113,3 +113,25 @@ Once deployed to Wildfly, you can access the application by pointing your
 browser to
 
 [http://localhost:8080//my-war-1.0-SNAPSHOT/](http://localhost:8080//my-war-1.0-SNAPSHOT/)
+
+
+## Solution
+
+This is an [issue in the EL specification](https://github.com/jakartaee/expression-language/issues/188),
+which was reported by BalusC right after [my question](https://stackoverflow.com/questions/72361100) was published. 
+
+A workaround suggested as an 
+[answer on StackOverflow](https://stackoverflow.com/questions/72361100/illegalaccessexception-when-accessing-zoneinfo-via-jsf-el-with-jdk-17#72362656)
+is to provide a Getter for the `rawOffset` attribute
+
+```java
+public int getDefaultTZrawOffset() {
+  return getDefaultTZ().getRawOffset();
+}
+```
+
+and use this in the EL:
+
+```
+#{myWarBean.defaultTZrawOffset}
+```
