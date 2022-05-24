@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:doctype rootElement="html"
+               public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+               system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
+
+  <html>
+  <h:head id="head"/>
+
+  <h:body id="body" >
+
+    <h2>Demonstrate IllegalAccessException</h2>
+
+    <h:panelGroup id="output" layout="block">
+      <h:outputText value="str=#{myWarBean.str}"/><br/>
+      <h:outputText value="i=#{myWarBean.i}"/><br/>
+      <h:outputText value="tz=#{myWarBean.tz.ID} - #{myWarBean.tz.displayName}"/><br/>
+      <ui:remove><!-- TODO the following line is problematic
+      --></ui:remove>
+      <h:outputText value="raw offset=#{myWarBean.defaultTZ.rawOffset}"/>
+    </h:panelGroup>
+
+    <h:form id="form" style="padding-top:1em">
+      <h:panelGroup id="input" layout="block">
+        <h:messages style="color:red"/>
+
+        <h:outputLabel value="str" for="str"/>
+        <h:inputText id="str" value="#{myWarBean.str}"/><br/>
+        <h:outputLabel value="i" for="i"/>
+        <h:outputLabel value="i" for="i"/>
+        <h:inputText id="i" value="#{myWarBean.i}"/><br/>
+        <h:outputLabel value="tzSelect" for="tzSelect"/>
+        <h:selectOneMenu id="tzSelect"
+                         value="#{myWarBean.tz}"
+                         converter="omnifaces.SelectItemsIndexConverter">
+          <f:selectItems value="#{myWarBean.availableTimeZones}"
+                         var="_tz"
+                         itemLabel="#{_tz.ID} - #{_tz.displayName}"
+                         itemValue="#{_tz}"/>
+        </h:selectOneMenu>
+      </h:panelGroup>
+
+      <div style="padding-top:1em">
+        <h:commandButton id="submit" value="Set new values" />
+        <h:commandButton id="resetTZ" value="Reset Default TZ" action="#{myWarBean.useDefaultTZ()}">
+          <f:ajax execute="@this" render=":output :input"/>
+        </h:commandButton>
+      </div>
+    </h:form>
+
+  </h:body>
+
+  </html>
+</ui:composition>
